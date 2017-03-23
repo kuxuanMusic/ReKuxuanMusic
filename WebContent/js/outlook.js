@@ -350,7 +350,7 @@ var _menus = {
 			"menuid" : "351",
 			"menuname" : "新增MV",
 			"icon" : "icon-nav",
-			"url" : "#"
+			"url" : "addMV.jsp"
 		}]
 	} ],
 	point : [ {
