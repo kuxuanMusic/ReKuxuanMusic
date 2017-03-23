@@ -1,0 +1,65 @@
+@CHARSET "UTF-8";
+
+body {
+	background-image: url("../images/singerCenter.png");
+}
+
+#SingerInfo {
+	border: 1px solid #9aa8ff;
+	border-collapse: collapse;
+}
+
+#name {
+	width: 100px;
+	height: 135px;
+	text-align: center;
+}
+
+#profile {
+	width: 1200px;
+	height: 135px;
+}
+
+#control {
+	width: 100px;
+	height: 135px;
+	text-align: center;
+}
+
+#page {
+	text-align: center;
+}
+
+#SingerInfo td{
+	border: 1px solid #9aa8ff;
+	padding: 2px;
+}
+
+#SingerInfo thead {
+	text-align: center;
+	background-color: #E0ECFF;
+}
+
+#SingerInfo tbody tr:hover {
+	background-color: #D4D4D4;
+}
+
+#SingerInfo tbody a:LINK, a:VISITED {
+	font-family: "黑体";
+	color: #727272;
+	text-decoration: none;
+}
+
+#SingerInfo tbody a:HOVER {
+	color: #400040;
+	text-decoration: underline;
+}
+
+function pageScroll (){
+	window.scrollBy(0,-100); 
+	setTimeout('pageScroll()',100); 
+	.documentElement.scrollTop,
+	var sTop=document.documentElement.scrollTop+document.body.scrollTop; 
+	if(sTop==0) clearTimeout(scrolldelay);
+	
+}
