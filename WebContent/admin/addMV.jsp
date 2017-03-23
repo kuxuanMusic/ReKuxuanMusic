@@ -11,7 +11,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-<form action="MVServlet?op=addMV" method="post">
+<form action="admin/MVServlet?op=addMV" method="post">
     <table style="width: 600px;margin: 200px auto;">
         <tr>
             <th>歌曲名：</th>
@@ -23,7 +23,7 @@
         </tr>
         <tr>
             <th>存放地址：</th>
-            <td><input type="text" name="mvAddress" required></td>
+            <td><input type="text" name="mvAddress" required><br>${msg}</td>
         </tr>
         <tr>
             <th colspan="2" style="text-align:center;">
