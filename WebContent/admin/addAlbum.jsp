@@ -3,23 +3,33 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+<%
+	String str = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath() + "/";
+%>
+<base href="<%=str%>">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
-<link href="../css/album/albumall.css" rel="stylesheet" />
+<link rel="stylesheet" type="text/css" href="Css/default.css"/>
+<link rel="stylesheet" type="text/css" href="jquery-easyui-1.5.1/themes/default/easyui.css" />
+<link rel="stylesheet" type="text/css" href="jquery-easyui-1.5.1/themes/icon.css" />
+
+<script type="text/javascript" src="jquery-easyui-1.5.1/jquery.min.js"></script>
+<script type="text/javascript" src="jquery-easyui-1.5.1/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="jquery-easyui-1.5.1/locale/easyui-lang-zh_CN.js"></script>
+<link href="css/album/albumall.css" rel="stylesheet" />
+
 </head>
 <body>
-<form action="../AlbumServlet" id="addAlbum" method="post">
-	<input name="op" type="hidden"  value="addAlbum" />
-    <table style="width: 600px;margin: 200px auto;">
-    
-        <tr> <td colspan="2" style="text-align:center;">${msg}</td></tr>
+<form action="admin/AlbumServlet?op=addAlbum" id="addAlbum" method="post">	
+    <table style="width: 1000px;margin: 200px auto;" id="addAlbum">    
+        <tr> <td colspan="2" style="text-align:center;" id="msg">${msg}</td></tr>
         <tr>
             <th>专辑名：</th>
             <td><input type="text" name="name"></td>
         </tr>
         <tr>
             <th>发行时间：</th>
-            <td><input id="dd" type="text" name="date" class="easyui-datebox" required> </td>
+            <td><input id="dd" type="text" class="easyui-datebox"  id="releasetime" name="releasetime" required> </td>
         </tr>
          <tr>
             <th>发行公司：</th>

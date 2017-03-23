@@ -10,12 +10,15 @@ import java.util.Map;
 
 import com.chinasoft.dao.Dao;
 import com.chinasoft.entity.MV;
+import com.chinasoft.entity.MVMusicAndSinger;
 import com.chinasoft.entity.Music;
+import com.chinasoft.util.PageModel;
 import com.chinasoft.entity.MV;
 
 public class MVDao {
 	/**
 	 * 插入MV信息
+	 * 
 	 * @param musicId
 	 * @param mvAddress
 	 * @Return: 1 插入mv成功 0 失败
@@ -103,21 +106,25 @@ public class MVDao {
 	 * @Description: 从数据库中获取mv
 	 * author:
 	 */
-	public ArrayList<MV> selectAllMV() {
+	public ArrayList<MVMusicAndSinger> selectAllMV() {
 		Connection conn = Dao.Connection();
-		String sql = "select musicid, address from mv ";
+		String sql = "select t1.mvid,t1.musicname, t1.address,t2.singername from "
+				+ "(select a.mvid ,a.musicid, a.address,b.musicName ,b.singerid from mv a,music b where a.musicid=b.musicid)t1,"
+                +"singer t2 where t1.singerid=t2.singerid";
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
-		ArrayList<MV> list = new ArrayList<>();
+		ArrayList<MVMusicAndSinger> list = new ArrayList<>();
 		try {
 			ps = conn.prepareStatement(sql);
 			rs = ps.executeQuery();
 			while (rs.next()) {
-				MV mv = new MV();
-				mv.setMusicId(rs.getInt("musicid"));
-				mv.setAddress(rs.getString("address"));
-				list.add(mv);
+				MVMusicAndSinger mms = new MVMusicAndSinger();
+				mms.setMvId(rs.getInt("t1.mvid"));
+				mms.setMusicName(rs.getString("t1.musicName"));
+				mms.setAddress(rs.getString("t1.address"));
+				mms.setSingerName(rs.getString("t2.singername"));
+				list.add(mms);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -133,14 +140,14 @@ public class MVDao {
 	 * @param singername
 	 * @return 0：未查询到；1~正无穷：歌手ID
 	 */
-	public int selectSingerIdBySingerName(String singername) {
+	public int selectSingerIdBySingerName(String singerName) {
 		Connection conn = Dao.Connection();
-		String sql = "select singerid address from singer where singername = ?";
+		String sql = "select singerid from singer where singername = ?";
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		try {
 			ps = conn.prepareStatement(sql);
-			ps.setString(1, singername);
+			ps.setString(1, singerName);
 			rs = ps.executeQuery();
 			while (rs.next()) {
 				return rs.getInt("singerid");
@@ -152,26 +159,57 @@ public class MVDao {
 		}
 		return 0;
 	}
-	
-	public Map getMVBySingerId(int singerId) {
+
+	/**
+	 * 根据歌手ID查询歌手名
+	 * 
+	 * @param singerID
+	 * @return 歌手名,null歌手不存在
+	 *//*
+	public String selectSingerNameBySingerId(int singerId) {
+		Connection conn = Dao.Connection();
+		String sql = "select singername from singer where singerid= ?";
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		String singerName =null;
+		try {
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1, singerId);
+			rs = ps.executeQuery();
+			
+			while (rs.next()) {
+				singerName = rs.getString("singername");
+				System.out.println(rs.getString("singername"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			Dao.closeConn(rs, null, ps, conn);
+		}
+		return singerName;
+	}
+*/
+	/**
+	 * 根据歌手ID查找歌曲名，MV存放地址
+	 * 
+	 * @param singerId
+	 * @return 存放带有歌曲名的歌曲对象和带有MV存放地址的MV对象的map集合
+	 */
+	public Map<String, String> getMVBySingerId(int singerId) {
 		Connection conn = Dao.Connection();
 		String sql = "select a.musicname,b.address from music a ,mv b where a.musicid = b.musicid and singerid=?";
 		PreparedStatement ps = null;
 		ResultSet rs = null;
-		
-		Map<Music, MV> map = new HashMap<>();
+
+		Map<String, String> map = new HashMap<>();
 
 		try {
 			ps = conn.prepareStatement(sql);
 			ps.setInt(1, singerId);
 			rs = ps.executeQuery();
 			while (rs.next()) {
-				Music ms = new Music();
-				MV mv = new MV();
 				
-				ms.setMusicName(rs.getString("a.musicname"));
-				mv.setAddress(rs.getString("b.address"));
-				map.put(ms, mv);
+				map.put(rs.getString("a.musicname"), rs.getString("b.address"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -180,4 +218,126 @@ public class MVDao {
 		}
 		return map;
 	}
+	
+	public MVMusicAndSinger selectMusicNameAddSingerAddAddressNameByMvId(String mvId){
+		Connection conn = Dao.Connection();
+		String sql = "select t1.mvid,t1.musicname, t1.address,t2.singername from "
+				+ "(select a.mvid,a.musicid, a.address,b.musicName ,b.singerid from mv a,music b where a.musicid=b.musicid and mvid=?)t1,"
+                +"singer t2 where t1.singerid=t2.singerid";
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		MVMusicAndSinger mms =null;
+
+		try {
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, mvId);
+			rs = ps.executeQuery();
+			while (rs.next()) {
+				mms = new MVMusicAndSinger();
+				mms.setMvId(rs.getInt("t1.mvid"));
+				mms.setMusicName(rs.getString("t1.musicName"));
+				mms.setAddress(rs.getString("t1.address"));
+				mms.setSingerName(rs.getString("t2.singername"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			Dao.closeConn(rs, null, ps, conn);
+		}
+		return mms;
+	}
+	/**
+	 * 修改MV信息
+	 * 
+	 * @param musicId
+	 * @param mvAddress
+	 * @Return: 1 修改mv成功 0 失败
+	 * @Description: 插入mv author:
+	 */
+	public int updateMV(int musicId, String mvAddress) {
+		Connection conn = Dao.Connection();
+		String sql = "update mv set address=? where musicId = ?";
+		PreparedStatement ps = null;
+		int result = 0;
+		try {
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, mvAddress);
+			ps.setInt(2, musicId);
+			result = ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			Dao.closeConn(null, null, ps, conn);
+		}
+		return result;
+	}
+	
+	/**
+	 * 
+	 * @param pageNo 当前第几页
+	 * @param pageSize 每页的条数
+	 * @return 
+	 */
+	public PageModel selectMvpaging(int pageNo, int pageSize){
+		Connection conn = Dao.Connection();
+		String sql = "select t1.mvid,t1.musicname, t1.address,t2.singername from "
+				+"(select a.mvid,a.musicid, a.address,b.musicName ,b.singerid "
+						+"from mv a,music b where a.musicid=b.musicid)t1,"
+                +"singer t2 where t1.singerid=t2.singerid limit ?, ?";
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		ArrayList<MVMusicAndSinger> list = new ArrayList<>();
+		PageModel pm = new PageModel();
+		try {
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1, (pageNo - 1)*pageSize );
+			ps.setInt(2, pageSize);
+			
+			rs = ps.executeQuery();
+			while (rs.next()) {
+				MVMusicAndSinger mms = new MVMusicAndSinger();
+				mms.setMvId(rs.getInt("t1.mvid"));
+				mms.setMusicName(rs.getString("t1.musicname"));
+				mms.setAddress(rs.getString("t1.address"));
+				mms.setSingerName(rs.getString("t2.singername"));
+				list.add(mms);
+			}
+			
+			pm.setList(list);
+			pm.setCount(selectMvCount());
+			pm.setPageNo(pageNo);
+			pm.setPageSize(pageSize);
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			Dao.closeConn(rs, null, ps, conn);
+		}		
+		return pm;
+	}
+	/**
+	 * 查询数据库中mv的信息条数
+	 * @return mv的信息总条数
+	 */
+	public int selectMvCount(){
+		Connection conn = Dao.Connection();
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		int count = 0;
+		String sql = "select count(*) from mv";
+		try{
+			ps =  conn.prepareStatement(sql);
+			rs = ps.executeQuery(sql);
+			while(rs.next()){
+				count = rs.getInt(1);
+			}			
+		} catch(Exception e){
+			e.printStackTrace();
+		} finally {
+			Dao.closeConn(rs, null, ps, conn);
+		}
+				
+		return count;
+	}
+	
 }

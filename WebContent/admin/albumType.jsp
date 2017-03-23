@@ -12,9 +12,10 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 <script type="text/javascript" src="js/album/albumType.js"></script>
+<link href="css/album/albumall.css" rel="stylesheet"/>
 </head>
 <body>
-<table id="albumTypeinfo">
+<table id="albumTypeinfo" style="width: 1000px;margin:0px auto;">
     <thead>
     <tr>        
         <td>专辑类型</td>               
@@ -48,5 +49,6 @@
     	<tr>
     </tfoot>    
 </table>
+
 </body>
 </html>

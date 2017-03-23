@@ -6,36 +6,36 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <%
-	String str = request.getScheme() + "://" + request.getServerName()
-			+ ":" + request.getServerPort() + request.getContextPath()
-			+ "/";
+	String str = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
+			+ request.getContextPath() + "/";
 %>
 <base href="<%=str%>">
 <title>操作歌手</title>
-<link rel='icon' href='images/music.ico ' type='image/x-ico'/>
+<link rel='icon' href='images/music.ico ' type='image/x-ico' />
 <link href="css/singercss/singerCenter.css" rel="stylesheet" />
 <script type="text/javascript" src="js/singer/singer.js">
 	
 </script>
 </head>
 <body>
-	<table id="SingerInfo" style="width:100%;">
+	<table id="SingerInfo">
 		<thead>
 			<tr style="text-align: center; font-family: 黑体">
-				<th width="15%">歌手名</th>
-				<th width="75%">个人简介</th>
-				<th width="10%" style="border: 1px solid #9aa8ff;">操作选项</th>
+				<th>歌手名</th>
+				<th>个人简介</th>
+				<th colspan="2">操作选项</th>
 			</tr>
 		</thead>
 		<tbody>
 			<c:forEach items="${pm.list}" var="singer">
 				<tr>
-					<td hidden><input type="text" name="id" value="${singer.singerId}" /></td>
+					<td hidden><input type="text" name="id"
+						value="${singer.singerId}" /></td>
 					<td id="name">${singer.singerName }</td>
 					<td id="profile">${singer.profile }</td>
-					<th id="contorl" style="border: 1px solid #9aa8ff;"><a
+					<td colspan="2" id="contorl"><a
 						href="javascript:changeSinger(${singer.singerId})" target="_blank">修改</a>
-						<a href="javascript:deleteSinger(${singer.singerId})">删除</a></th>
+						<a href="javascript:deleteSinger(${singer.singerId})">删除</a></td>
 				</tr>
 			</c:forEach>
 		</tbody>
@@ -51,9 +51,9 @@
 						<a href="javascript:toPage(${pm.pageLast})">尾页</a>
 					</c:if> ${pm.pageNo}/${pm.pageLast} 共${pm.count}条数据 跳转到<input type="text"
 					name="pageNo" value="${pm.pageNo}" id="pageNo"
-					onkeyup="changePageNo(event)" />页 每页<input type="text"
-					name="pageSize" value="${pm.pageSize}" id="pageSize"
-					onkeyup="changePageNo(event)"/>条数据</td>
+					onkeyup="changePageNo(event,${pm.pageLast})" />页 每页<input
+					type="text" name="pageSize" value="${pm.pageSize}" id="pageSize"
+					onkeyup="changePageSize(event)" />条数据</td>
 			<tr>
 		</tfoot>
 	</table>

@@ -23,11 +23,30 @@ function toPage(no) {
 			+ "&pageSize=" + pageSize;
 }
 
-function changePageNo(e) {
+function changePageNo(e, o) {
 	var pageNo = document.getElementById("pageNo").value;
 	var pageSize = document.getElementById("pageSize").value;
 	if (e.keyCode == 13) {
-		location.href = "admin/SingerServlet?op=SingerPage&pageNo=" + pageNo
-				+ "&pageSize=" + pageSize;
+		if (pageNo < o) {
+			location.href = "admin/SingerServlet?op=SingerPage&pageNo="
+					+ pageNo + "&pageSize=" + pageSize;
+		} else {
+			location.href = "admin/SingerServlet?op=SingerPage&pageNo=" + o
+					+ "&pageSize=" + pageSize;
+		}
+	}
+}
+function changePageSize(e) {
+	var pageNo = document.getElementById("pageNo").value;
+	var pageSize = document.getElementById("pageSize").value;
+	var reg = /@\d{1,5}$/;
+	if (e.keyCode == 13) {
+		if (reg.test(pageSize)) {
+			location.href = "admin/SingerServlet?op=SingerPage&pageNo="
+					+ pageNo + "&pageSize=" + pageSize;
+		} else {
+			location.href = "admin/SingerServlet?op=SingerPage&pageNo="
+					+ pageNo + "&pageSize=5";
+		}
 	}
 }

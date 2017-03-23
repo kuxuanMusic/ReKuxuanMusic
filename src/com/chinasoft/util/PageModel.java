@@ -3,21 +3,37 @@ package com.chinasoft.util;
 import java.util.ArrayList;
 
 public class PageModel {
-	
+	/**
+	 *  共有多少条数据
+	 */
 	private int count = 0;
-
+	/**
+	 * 每页多少条数据
+	 */
 	private int pageSize = 0;
-
+	/**
+	 * 当前是第几页
+	 */
 	private int pageNo = 0;
-	
+	/**
+	 * 上一页
+	 */
 	private int pagePre = 0;
-
+	/**
+	 * 下一页
+	 */
 	private int pageNext = 0;
-
+	/**
+	 * 第一页
+	 */
 	private int pageFirst = 0;
-
+	/**
+	 * 尾页
+	 */
 	private int pageLast = 0;
-
+	/**
+	 * 分页数据
+	 */
 	private ArrayList list;
 
 	public int getCount() {
@@ -49,37 +65,21 @@ public class PageModel {
 		return pagePre;
 	}
 
-/*	public void setPagePre(int pagePre) {
-		this.pagePre = pagePre;
-	}*/
-
 	public int getPageNext() {
-		pageNext = pageNo + 1 > getPageLast() ? getPageLast() : pageNo + 1;		
+		pageNext = pageNo + 1 > getPageLast() ? getPageLast() : pageNo + 1;
 		return pageNext;
 	}
-
-/*	public void setPageNext(int pageNext) {
-		this.pageNext = pageNext;
-	}*/
 
 	public int getPageFirst() {
 		pageFirst = 1;
 		return pageFirst;
 	}
 
-//	public void setPageFirst(int pageFirst) {
-//		this.pageFirst = pageFirst;
-//	}
-
 	public int getPageLast() {
-		// ͨ��������
+		// 通过计算获得
 		pageLast = count == 0 ? 1 : (count % pageSize == 0 ? count / pageSize : count / pageSize + 1);
 		return pageLast;
 	}
-
-//	public void setPageLast(int pageLast) {
-//		this.pageLast = pageLast;
-//	}
 
 	public ArrayList getList() {
 		return list;

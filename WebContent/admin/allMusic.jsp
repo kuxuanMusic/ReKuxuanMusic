@@ -12,7 +12,7 @@
 <base href="<%=str%>">
 <title>用户管理</title>
 <link rel="stylesheet" type="text/css"
-	href="jquery-easyui-1.5.1/themes/black/easyui.css">
+	href="jquery-easyui-1.5.1/themes/gray/easyui.css">
 <link rel="stylesheet" type="text/css"
 	href="jquery-easyui-1.5.1/themes/icon.css">
 <script type="text/javascript" src="jquery-easyui-1.5.1/jquery.min.js"></script>
@@ -24,18 +24,18 @@
 	//关键字查询
 	function searchSaleChance() {
 		$("#dg").datagrid('load', {
-			"musicId" : $("#s_noticeid").val(),
-			"noticetype" : $("#s_noticetype").combobox("getValue"),
-			"noticetitle" : $("#s_noticetitle").val(),
-			"noticeauthor" : $("#s_noticeauthor").val(),
+			"musicId" : $("#s_musicId").val(),
+			"musicName" : $("#s_musicName").val(),
+			"singerName" : $("#s_singerName").val(),
+			"albumName" : $("#s_albumName").val()
 		});
 	}
 
-	/* //添加
+	//添加
 	function openSaleChanceAddDialog() {
 		$("#dlg").dialog("open").dialog("setTitle", "添加歌曲");
 		url = "admin/MusicServlet?op=addMusic";
-	} */
+	}
 
 	//修改
 	function openSaleChanceModifyDialog() {
@@ -104,14 +104,14 @@
 		<thead>
 			<tr>
 				<!-- <th field="cb" checkbox="true" align="center"></th> -->
-				<th field="musicId" width="4%" align="center">歌曲编号</th>
-				<th field="musicName" width="15%" align="center">歌曲名</th>
+				<th field="musicId" width="4%" align="center" hidden>歌曲编号</th>
+				<th field="musicName" width="20%" align="center">歌曲名</th>
 				<th field="singerName" width="15%" align="center">歌手名</th>
 				<th field="albumName" width="15%" align="center">专辑名</th>
 				<th field="releaseTime" width="10%" align="center">发布时间</th>
 				<th field="languageName" width="10%" align="center">语种</th>
 				<th field="typeName" width="10%" align="center">类型</th>
-				<th field="address" width="20%" align="center">歌曲存放地址</th>
+				<th field="address" width="21%" align="center">歌曲存放地址</th>
 			</tr>
 		</thead>
 	</table>
@@ -121,20 +121,13 @@
 			<a href="javascript:openSaleChanceModifyDialog()" class="easyui-linkbutton" iconCls="icon-edit" plain="true">修改</a>
 		</div>
 		<div>
-			&nbsp;公告编号：&nbsp;<input type="text" id="s_noticeid" size="20"
+			&nbsp;歌曲编号：&nbsp;<input type="text" id="s_musicId" size="20"
 				onkeydown="if(event.keyCode==13) searchSaleChance()" />
-			&nbsp;公告类型：&nbsp; <input type="text" id="s_noticetype" size="20"
-				onkeydown="if(event.keyCode==13) searchSaleChance()" /> <select
-				class="easyui-combobox" id="s_noticetype" editable="false"
-				panelHeight="auto">
-				<option value="">请选择...</option>
-				<option value="新闻">新闻</option>
-				<option value="通知">通知</option>
-			</select> &nbsp;公告标题：&nbsp;<input type="text" id="s_noticetitle" size="20"
+			&nbsp;歌曲名：&nbsp; <input type="text" id="s_musicName" size="20"
+				onkeydown="if(event.keyCode==13) searchSaleChance()" /> 
+			&nbsp;专辑名：&nbsp; <input type="text" id="s_albumName" size="20"
 				onkeydown="if(event.keyCode==13) searchSaleChance()" />
-			&nbsp;发布人：&nbsp;<input type="text" id="s_noticeauthor" size="20"
-				onkeydown="if(event.keyCode==13) searchSaleChance()" /> <a
-				href="javascript:searchSaleChance()" class="easyui-linkbutton"
+			<a href="javascript:searchSaleChance()" class="easyui-linkbutton"
 				iconCls="icon-search" plain="true">搜索</a>
 		</div>
 	</div>

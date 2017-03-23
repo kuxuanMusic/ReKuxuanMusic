@@ -42,7 +42,7 @@ public class SingerServlet extends HttpServlet {
 	}
 
 	/**
-	 * 查询所有歌手，带换页
+	 * 查询所有歌手，带分页
 	 * 
 	 * @param request
 	 * @param response
@@ -56,9 +56,20 @@ public class SingerServlet extends HttpServlet {
 		// 当前是第几页
 		int pageNo = 0;
 		// 当前页
-		pageNo = Integer.valueOf(request.getParameter("pageNo"));
-		pageSize = Integer.valueOf(request.getParameter("pageSize"));
-
+		if (!("".equals(request.getParameter("pageNo")) || request
+				.getParameter("pageNo") == null)
+				&& Integer.valueOf(request.getParameter("pageNo")) != 0) {
+			pageNo = Integer.valueOf(request.getParameter("pageNo"));
+		} else {
+			pageNo = 1;
+		}
+		if (!("".equals(request.getParameter("pageSize")) || request
+				.getParameter("pageSize") == null)
+				&& Integer.valueOf(request.getParameter("pageSize")) != 0) {
+			pageSize = Integer.valueOf(request.getParameter("pageSize"));
+		} else {
+			pageSize = 5;
+		}
 		SingerService service = new SingerService();
 		PageModel pm = service.getSingerPage(pageNo, pageSize);
 
@@ -68,7 +79,7 @@ public class SingerServlet extends HttpServlet {
 	}
 
 	/**
-	 * 查询所有歌手
+	 * 查询所有歌手/不带分页
 	 * 
 	 * @param request
 	 * @param response

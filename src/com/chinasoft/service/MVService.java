@@ -1,10 +1,14 @@
 package com.chinasoft.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 import com.chinasoft.dao.daoImpl.MVDao;
 import com.chinasoft.entity.MV;
+import com.chinasoft.entity.MVMusicAndSinger;
+import com.chinasoft.entity.Music;
+import com.chinasoft.util.PageModel;
 
 public class MVService {
 
@@ -27,9 +31,9 @@ public class MVService {
 	 * @Description: 根据歌手名得歌手id 0:歌手不存在,1-正无穷歌手id
 	 * author:
 	 */
-	public int selectSingerIdBySingerName(String singername) {
+	public int selectSingerIdBySingerName(String singerName) {
 		MVDao md = new MVDao();
-		return md.selectSingerIdBySingerName(singername);
+		return md.selectSingerIdBySingerName(singerName);
 	}
 
 	/**
@@ -45,14 +49,37 @@ public class MVService {
 		return md.selectMusicIdByMusicNameAndSingerId(singerId, musicName);
 	}
 	
-	public ArrayList<MV> selectAllMV(){
+	public ArrayList<MVMusicAndSinger> selectAllMV(){
 		MVDao md = new MVDao();
 		return md.selectAllMV();
 	}
 	
-	public Map getMVBySingerId(int singerId) {
+	public Map<String,String> getMVBySingerId(int singerId) {
 		MVDao md = new MVDao();
 		return md.getMVBySingerId(singerId);
-		 
+	}
+	
+	public MVMusicAndSinger changeMV(String mvId){
+		MVDao md = new MVDao();
+		return md.selectMusicNameAddSingerAddAddressNameByMvId(mvId);
+	}
+	
+	/**
+	 * @param mvId,mvID
+	 * @param musicName,歌曲名
+	 * @param mvAddress,mv存放地址
+	 * @Return: 1插入mv成功 0失败
+	 * @Description: 修改mvId所在的mv信息
+	 */
+	public int updateMV(int musicId, String mvAddress) {
+		MVDao md = new MVDao();
+		return md.updateMV(musicId, mvAddress);
+	}
+	
+	public PageModel getMvpaging(int pageNO, int pageSize){
+		MVDao dao = new MVDao();
+		PageModel pm = dao.selectMvpaging(pageNO, pageSize);
+		
+		return pm;
 	}
 }
