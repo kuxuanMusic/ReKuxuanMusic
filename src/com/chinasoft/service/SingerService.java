@@ -101,4 +101,17 @@ public class SingerService {
 		int count = dao.updateSinger(singer);
 		return count;
 	}
+
+	/**
+	 * 添加歌手图片
+	 * 
+	 * @param SingerName
+	 * @param FileName
+	 * @return count
+	 */
+	public int insertSingerPhoto(String SingerName, String FileName) {
+		SingerDao dao = new SingerDao();
+		int count = dao.setSingerPhoto(SingerName, FileName);
+		return count;
+	}
 }

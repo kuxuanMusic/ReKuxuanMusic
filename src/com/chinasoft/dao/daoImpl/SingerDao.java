@@ -233,4 +233,29 @@ public class SingerDao {
 		}
 		return count;
 	}
+
+	/**
+	 * 添加歌手图片
+	 * 
+	 * @param SingerName
+	 * @param FileName
+	 * @return count
+	 */
+	public int setSingerPhoto(String SingerName, String FileName) {
+		Connection con = Dao.Connection();
+		String sql = "INSERT INTO singerphoto VALUES(null,(SELECT singerid FROM singer WHERE singername = ?),?)";
+		PreparedStatement pre = null;
+		int count = 0;
+		try {
+			pre = con.prepareStatement(sql);
+			pre.setString(1, SingerName);
+			pre.setString(2, FileName);
+			count = pre.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			Dao.closeConn(null, null, pre, con);
+		}
+		return count;
+	}
 }

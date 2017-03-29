@@ -1,0 +1,23 @@
+@CHARSET "UTF-8";
+
+* {
+	margin: 0px;
+	padding: 0px;
+}
+
+table {
+	border: 1px;
+	margin: auto;
+	margin-top: 15%;
+	border-collapse: collapse;
+}
+
+table tr {
+	border: 1px solid #000000;
+	font-family: '楷体';
+	font-weight: bold;
+}
+
+table td {
+	padding: 5px;
+}
