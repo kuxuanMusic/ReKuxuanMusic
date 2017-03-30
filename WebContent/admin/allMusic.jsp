@@ -125,6 +125,8 @@
 				onkeydown="if(event.keyCode==13) searchSaleChance()" />
 			&nbsp;歌曲名：&nbsp; <input type="text" id="s_musicName" size="20"
 				onkeydown="if(event.keyCode==13) searchSaleChance()" /> 
+			&nbsp;歌曲名：&nbsp; <input type="text" id="s_singerName" size="20"
+				onkeydown="if(event.keyCode==13) searchSaleChance()" /> 
 			&nbsp;专辑名：&nbsp; <input type="text" id="s_albumName" size="20"
 				onkeydown="if(event.keyCode==13) searchSaleChance()" />
 			<a href="javascript:searchSaleChance()" class="easyui-linkbutton"

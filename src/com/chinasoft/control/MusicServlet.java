@@ -38,7 +38,6 @@ public class MusicServlet extends HttpServlet {
 			throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
 		String op = request.getParameter("op");
-
 		if ("addMusic".equals(op)) {
 			addMusic(request, response);
 		} else if ("allMusic".equals(op)) {
@@ -47,7 +46,46 @@ public class MusicServlet extends HttpServlet {
 			updateMusic(request, response);
 		} else if ("musicFenye".equals(op)) {
 			musicFenye(request, response);
+		} else if ("toplist".equals(op)) {
+			toplist(request, response);
 		}
+	}
+
+	/**
+	 * 歌曲排行榜
+	 * 
+	 * @param request
+	 * @param response
+	 * @throws ServletException
+	 * @throws IOException
+	 */
+	private void toplist(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		MusicService service = new MusicService();
+		/**
+		 * 流行指数巅峰榜
+		 */
+		ArrayList<MusicSingerAndAlbum> msas1 = service.selectAllMusic();
+		/**
+		 * 热歌巅峰榜
+		 */
+		ArrayList<MusicSingerAndAlbum> msas2 = service.selectAllMusic();
+		/**
+		 * 新歌巅峰榜
+		 */
+		ArrayList<MusicSingerAndAlbum> msas3 = service.selectAllMusic();
+		/**
+		 * 欧美巅峰榜
+		 */
+		ArrayList<MusicSingerAndAlbum> msas4 = service.selectAllMusic();
+		for(MusicSingerAndAlbum msa: msas1){
+			System.out.println(msa);
+		}
+		request.setAttribute("msa1", msas1);
+		request.setAttribute("msa2", msas2);
+		request.setAttribute("msa3", msas3);
+		request.setAttribute("msa4", msas4);
+		request.getRequestDispatcher("MVServlet?op=showmv").forward(request, response);
 	}
 
 	/**
@@ -106,7 +144,7 @@ public class MusicServlet extends HttpServlet {
 		System.out.println(music.getAddress());
 		int result = service.updateMusic(music);
 		System.out.println(result);
-		
+
 		JSONObject jsonObject = new JSONObject();
 		if (result == 1) {
 			jsonObject.put("success", true);
@@ -178,6 +216,7 @@ public class MusicServlet extends HttpServlet {
 
 	/**
 	 * 音乐分页查询
+	 * 
 	 * @param request
 	 * @param response
 	 * @throws ServletException
@@ -189,15 +228,15 @@ public class MusicServlet extends HttpServlet {
 		int pageSize = 0;
 		// 当前是第几页
 		int pageNo = 0;
-			
+
 		// 当前页
 		pageNo = Integer.valueOf(request.getParameter("page"));
 		pageSize = Integer.valueOf(request.getParameter("rows"));
-		
+
 		MusicService service = new MusicService();
 		ArrayList<MusicSingerAndAlbum> msa = service.selectAllMusic(pageNo, pageSize);
 		int total = service.selectMusicCount();
-		
+
 		JSONObject result = new JSONObject();
 		JsonConfig jsonConfig = new JsonConfig();
 		JSONArray jsonArray = JSONArray.fromObject(msa, jsonConfig);

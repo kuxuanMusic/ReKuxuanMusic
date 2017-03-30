@@ -1,11 +1,10 @@
 package com.chinasoft.service;
 
-import java.sql.ResultSet;
 import java.util.*;
 
-import com.chinasoft.dao.daoImpl.*;
-import com.chinasoft.entity.*;
 import com.chinasoft.util.PageModel;
+import com.chinasoft.dao.daoImpl.UserDao;
+import com.chinasoft.entity.User;
 
 public class UserService {
 
@@ -54,5 +53,10 @@ public class UserService {
 		PageModel pm = uDao.selectUserNew(pageNO, pageSize);
 
 		return pm;
+	}
+
+	public int selectUserByUserNameAndPassword(User user) {
+		UserDao userDao = new UserDao();
+		return userDao.selectUserByUserNameAndPassword(user);
 	}
 }

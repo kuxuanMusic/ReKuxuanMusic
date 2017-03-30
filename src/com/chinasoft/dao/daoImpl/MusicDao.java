@@ -54,6 +54,32 @@ public class MusicDao {
 	}
 	
 	/**
+	 * @param name
+	 * @param address
+	 * @return 1 添加成功,0 添加失败
+	 */
+	public int addPicture(String name, String address){
+		String sql = "insert into musicpicture values (null,(select musicid from music where musicname=?),?)";
+		Connection conn = Dao.Connection();
+		int i = 0;
+		
+		try {
+			PreparedStatement pst = conn.prepareStatement(sql);
+			
+			pst.setString(1, name);
+			pst.setString(2, address);
+			
+			System.out.println("musicname: " + name);
+			System.out.println("address: " + address);
+			i = pst.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return i;
+	}
+	
+	/**
 	 * 根据歌手Id和歌曲名查询歌曲
 	 * 
 	 * @param musicName
@@ -253,6 +279,4 @@ public class MusicDao {
 		}
 		return 0;
 	}
-
-	
 }

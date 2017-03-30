@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.chinasoft.entity.MV;
+import com.chinasoft.entity.MVInfo;
 import com.chinasoft.entity.MVMusicAndSinger;
 import com.chinasoft.entity.Music;
 import com.chinasoft.service.MVService;
@@ -42,23 +44,39 @@ public class MVServlet extends HttpServlet {
 			updateMV(request, response);
 		} else if ("mvpaging".equals(op)) {
 			mvpaging(request, response);
+		} else if ("showmv".equals(op)) {
+			showMV(request, response);
 		}
-
 	}
 
-	private void mvpaging(HttpServletRequest request, HttpServletResponse response)
+	/**
+	 * 前台主页显示MV列表
+	 * 
+	 * @param request
+	 * @param response
+	 * @throws ServletException
+	 * @throws IOException
+	 */
+	protected void showMV(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		MVService service = new MVService();
+		ArrayList<MVInfo> list = service.selectMVPicture();
+		
+		request.setAttribute("mvs", list);
+		request.getRequestDispatcher("../index.jsp").forward(request, response);
+	}
+
+	protected void mvpaging(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		int pageSize = 0;
 		int pageNo = 0;
-		if (!("".equals(request.getParameter("pageNo")) || request
-				.getParameter("pageNo") == null)
+		if (!("".equals(request.getParameter("pageNo")) || request.getParameter("pageNo") == null)
 				&& Integer.valueOf(request.getParameter("pageNo")) != 0) {
 			pageNo = Integer.valueOf(request.getParameter("pageNo"));
 		} else {
 			pageNo = 1;
 		}
-		if (!("".equals(request.getParameter("pageSize")) || request
-				.getParameter("pageSize") == null)
+		if (!("".equals(request.getParameter("pageSize")) || request.getParameter("pageSize") == null)
 				&& Integer.valueOf(request.getParameter("pageSize")) != 0) {
 			pageSize = Integer.valueOf(request.getParameter("pageSize"));
 		} else {
@@ -72,7 +90,7 @@ public class MVServlet extends HttpServlet {
 		request.getRequestDispatcher("allMV.jsp").forward(request, response);
 	}
 
-	private void updateMV(HttpServletRequest request, HttpServletResponse response)
+	protected void updateMV(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String mvId = request.getParameter("mvId");
 		String singerName = request.getParameter("singerName");

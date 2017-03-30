@@ -1,0 +1,285 @@
+* {
+    margin: 0;
+    padding: 0;
+    color: black;
+    text-decoration: none;
+}
+
+body {
+    background: gray;
+}
+
+header {
+    width: 1400px;
+    margin: auto;
+    height: 150px;
+    background: #ebe4e6;
+    opacity: 0.9;
+}
+
+#logo {
+    margin: auto;
+}
+
+#logo img {
+    width: 300px;
+    vertical-align: middle;
+}
+
+#logo div.top {
+    display: inline-block;
+    margin: 0 15px 0 15px;
+    font-size: 30px;
+}
+
+#logo div.top a,p {
+    margin-top: 10px;
+    color: #000000;
+}
+
+#demo{
+    display: inline-block;
+    margin-top: 20px;
+    position: relative;
+    top: 0;
+    left: 340px;
+}
+#demo div{
+    display: inline-block;
+}
+
+#demo div a {
+    font-size: 25px;
+    color: red;
+}
+
+#nov {
+    width: 1000px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+#nov .nov1 {
+    width: 150px;
+    text-align: center;
+    height: 50px;
+    font-family: 楷体;
+    display: inline-block;
+}
+
+#nov .nov1 a {
+    display: block;
+    margin: 10px 0 0 0;
+    font-size: 30px;
+}
+
+#nov .nov1 a b {
+    color: #000000;
+}
+
+.box {
+    width: 1400px;
+    height: 340px;
+    margin: 15px auto;
+    position: relative;
+}
+
+.list {
+    width: 1200px;
+    height: 300px;
+    overflow: hidden;
+    position: absolute;
+    left: 50%;
+    margin-left: -600px;
+}
+
+.btn {
+    position: absolute;
+    top: 50%;
+    margin-top: -50px;
+    width: 60px;
+    height: 100px;
+    line-height: 100px;
+    font-size: 30px;
+    color: white;
+    text-decoration: none;
+    text-align: center;
+    background: #869e96;
+    cursor: pointer;
+}
+
+.next {
+    right: 0;
+}
+
+li {
+    position: absolute;
+    top: 0;
+    left: 0;
+    list-style: none;
+    opacity: 0;
+    transition: all 0.3s ease-out;
+}
+
+li img {
+    width: 751px;
+    height: 300px;
+    border: none;
+    float: left;
+}
+
+.p1 {
+    transform: translate3d(-224px, 0, 0) scale(0.81);
+}
+
+.p2 {
+    transform: translate3d(0px, 0, 0) scale(0.81);
+    transform-origin: 0 50%;
+    opacity: 0.8;
+    z-index: 2;
+}
+
+.p3 {
+    transform: translate3d(224px, 0, 0) scale(1);
+    z-index: 3;
+    opacity: 1;
+}
+
+.p4 {
+    transform: translate3d(449px, 0, 0) scale(0.81);
+    transform-origin: 100% 50%;
+    opacity: 0.8;
+    z-index: 2;
+}
+
+.p5 {
+    transform: translate3d(672px, 0, 0) scale(0.81);
+}
+
+.p6 {
+    transform: translate3d(896px, 0, 0) scale(0.81);
+}
+
+.p7 {
+    transform: translate3d(1120px, 0, 0) scale(0.81);
+}
+
+.buttons {
+    position: absolute;
+    width: 1200px;
+    height: 30px;
+    bottom: 0;
+    left: 50%;
+    margin-left: -600px;
+    text-align: center;
+    padding-top: 10px;
+}
+
+.buttons a {
+    display: inline-block;
+    width: 35px;
+    height: 5px;
+    padding-top: 4px;
+    cursor: pointer;
+}
+
+.buttons a span {
+    display: block;
+    width: 35px;
+    height: 1px;
+    background: red;
+}
+
+.blue {
+    background: blue;
+}
+
+#toplist_box, #mv {
+    width: 1400px;
+    margin: 20px auto 0;
+    text-align: center;
+}
+
+#toplist_box {
+    background: #c9ebfa;
+    height: 580px;
+}
+
+#toplist_box span#phb, #mv span#sb {
+    width: 200px;
+    font-size: 40px;
+    text-align: center;
+    margin-top: 20px;
+    margin-left: 60px;
+}
+
+.toplist {
+    display: inline-block;
+    margin: 15px 12px 0 12px;
+    float:left;
+    width: 325px;
+    height: 500px;
+    text-align:center;
+}
+
+.toplist p {
+    margin-top: 10px;
+    font-size: 30px;
+}
+.toplist table{
+	width:300px;
+	margin:70px auto 0;
+}
+
+.toplist table tr td{
+	font-size: 20px;
+	color:white;
+	text-align:left;
+}
+.df {
+    font-size: 18px;
+}
+
+#mv {
+    text-align: center;
+    background: #dadbee;
+    opacity: 0.7;
+}
+
+#mv #sort {
+    font-size: 30px;
+}
+
+#mv #sort a {
+    margin: 0 40px 0 40px;
+}
+
+#mv #show {
+    width: 1350px;
+    margin: 20px auto;
+    height: 550px;
+}
+
+#mv #show .showmv{
+	display:inline-block;
+	margin : 0 18px;
+	float:left;
+}
+footer {
+    width: 1200px;
+    height: 150px;
+    margin: 20px auto;
+}
+
+.footer_link {
+    text-align: center;
+}
+
+.footer_link_list__item {
+    display: inline-block;
+}
+
+.footer_copyright {
+    margin-top: 20px;
+    text-align: center;
+}

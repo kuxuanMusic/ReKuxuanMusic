@@ -10,6 +10,7 @@ import java.util.Map;
 
 import com.chinasoft.dao.Dao;
 import com.chinasoft.entity.MV;
+import com.chinasoft.entity.MVInfo;
 import com.chinasoft.entity.MVMusicAndSinger;
 import com.chinasoft.entity.Music;
 import com.chinasoft.util.PageModel;
@@ -102,15 +103,14 @@ public class MVDao {
 
 	/**
 	 * 
-	 * @return mv对象的集合 
-	 * @Description: 从数据库中获取mv
-	 * author:
+	 * @return mv对象的集合
+	 * @Description: 从数据库中获取mv author:
 	 */
 	public ArrayList<MVMusicAndSinger> selectAllMV() {
 		Connection conn = Dao.Connection();
 		String sql = "select t1.mvid,t1.musicname, t1.address,t2.singername from "
 				+ "(select a.mvid ,a.musicid, a.address,b.musicName ,b.singerid from mv a,music b where a.musicid=b.musicid)t1,"
-                +"singer t2 where t1.singerid=t2.singerid";
+				+ "singer t2 where t1.singerid=t2.singerid";
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
@@ -166,29 +166,18 @@ public class MVDao {
 	 * @param singerID
 	 * @return 歌手名,null歌手不存在
 	 *//*
-	public String selectSingerNameBySingerId(int singerId) {
-		Connection conn = Dao.Connection();
-		String sql = "select singername from singer where singerid= ?";
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-		String singerName =null;
-		try {
-			ps = conn.prepareStatement(sql);
-			ps.setInt(1, singerId);
-			rs = ps.executeQuery();
-			
-			while (rs.next()) {
-				singerName = rs.getString("singername");
-				System.out.println(rs.getString("singername"));
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			Dao.closeConn(rs, null, ps, conn);
-		}
-		return singerName;
-	}
-*/
+		 * public String selectSingerNameBySingerId(int singerId) { Connection
+		 * conn = Dao.Connection(); String sql =
+		 * "select singername from singer where singerid= ?"; PreparedStatement
+		 * ps = null; ResultSet rs = null; String singerName =null; try { ps =
+		 * conn.prepareStatement(sql); ps.setInt(1, singerId); rs =
+		 * ps.executeQuery();
+		 * 
+		 * while (rs.next()) { singerName = rs.getString("singername");
+		 * System.out.println(rs.getString("singername")); } } catch
+		 * (SQLException e) { e.printStackTrace(); } finally { Dao.closeConn(rs,
+		 * null, ps, conn); } return singerName; }
+		 */
 	/**
 	 * 根据歌手ID查找歌曲名，MV存放地址
 	 * 
@@ -208,7 +197,7 @@ public class MVDao {
 			ps.setInt(1, singerId);
 			rs = ps.executeQuery();
 			while (rs.next()) {
-				
+
 				map.put(rs.getString("a.musicname"), rs.getString("b.address"));
 			}
 		} catch (SQLException e) {
@@ -218,15 +207,15 @@ public class MVDao {
 		}
 		return map;
 	}
-	
-	public MVMusicAndSinger selectMusicNameAddSingerAddAddressNameByMvId(String mvId){
+
+	public MVMusicAndSinger selectMusicNameAddSingerAddAddressNameByMvId(String mvId) {
 		Connection conn = Dao.Connection();
 		String sql = "select t1.mvid,t1.musicname, t1.address,t2.singername from "
 				+ "(select a.mvid,a.musicid, a.address,b.musicName ,b.singerid from mv a,music b where a.musicid=b.musicid and mvid=?)t1,"
-                +"singer t2 where t1.singerid=t2.singerid";
+				+ "singer t2 where t1.singerid=t2.singerid";
 		PreparedStatement ps = null;
 		ResultSet rs = null;
-		MVMusicAndSinger mms =null;
+		MVMusicAndSinger mms = null;
 
 		try {
 			ps = conn.prepareStatement(sql);
@@ -246,6 +235,7 @@ public class MVDao {
 		}
 		return mms;
 	}
+
 	/**
 	 * 修改MV信息
 	 * 
@@ -271,28 +261,30 @@ public class MVDao {
 		}
 		return result;
 	}
-	
+
 	/**
 	 * 
-	 * @param pageNo 当前第几页
-	 * @param pageSize 每页的条数
-	 * @return 
+	 * @param pageNo
+	 *            当前第几页
+	 * @param pageSize
+	 *            每页的条数
+	 * @return
 	 */
-	public PageModel selectMvpaging(int pageNo, int pageSize){
+	public PageModel selectMvpaging(int pageNo, int pageSize) {
 		Connection conn = Dao.Connection();
 		String sql = "select t1.mvid,t1.musicname, t1.address,t2.singername from "
-				+"(select a.mvid,a.musicid, a.address,b.musicName ,b.singerid "
-						+"from mv a,music b where a.musicid=b.musicid)t1,"
-                +"singer t2 where t1.singerid=t2.singerid limit ?, ?";
+				+ "(select a.mvid,a.musicid, a.address,b.musicName ,b.singerid "
+				+ "from mv a,music b where a.musicid=b.musicid)t1,"
+				+ "singer t2 where t1.singerid=t2.singerid limit ?, ?";
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		ArrayList<MVMusicAndSinger> list = new ArrayList<>();
 		PageModel pm = new PageModel();
 		try {
 			ps = conn.prepareStatement(sql);
-			ps.setInt(1, (pageNo - 1)*pageSize );
+			ps.setInt(1, (pageNo - 1) * pageSize);
 			ps.setInt(2, pageSize);
-			
+
 			rs = ps.executeQuery();
 			while (rs.next()) {
 				MVMusicAndSinger mms = new MVMusicAndSinger();
@@ -302,42 +294,70 @@ public class MVDao {
 				mms.setSingerName(rs.getString("t2.singername"));
 				list.add(mms);
 			}
-			
+
 			pm.setList(list);
 			pm.setCount(selectMvCount());
 			pm.setPageNo(pageNo);
 			pm.setPageSize(pageSize);
-			
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
 			Dao.closeConn(rs, null, ps, conn);
-		}		
+		}
 		return pm;
 	}
+
 	/**
 	 * 查询数据库中mv的信息条数
+	 * 
 	 * @return mv的信息总条数
 	 */
-	public int selectMvCount(){
+	public int selectMvCount() {
 		Connection conn = Dao.Connection();
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		int count = 0;
 		String sql = "select count(*) from mv";
-		try{
-			ps =  conn.prepareStatement(sql);
+		try {
+			ps = conn.prepareStatement(sql);
 			rs = ps.executeQuery(sql);
-			while(rs.next()){
+			while (rs.next()) {
 				count = rs.getInt(1);
-			}			
-		} catch(Exception e){
+			}
+		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
 			Dao.closeConn(rs, null, ps, conn);
 		}
-				
+
 		return count;
 	}
-	
+
+	/**
+	 * 查询MV图片
+	 * 
+	 * @return map<MVid, MusicPictureAddress>
+	 */
+	public ArrayList<MVInfo> selectMVPicture() {
+		String sql = "select mv.mvid, m.musicName, mp.address from mv mv, music m, musicpicture mp WHERE mv.musicid = m.musicid AND m.musicid = mp.musicid";
+		Connection conn = Dao.Connection();
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		ArrayList<MVInfo> list = new ArrayList<>();
+		try {
+			ps = conn.prepareStatement(sql);
+			rs = ps.executeQuery();
+			while (rs.next()) {
+				MVInfo info = new MVInfo();
+				info.setMvId(rs.getInt(1));
+				info.setMusicName(rs.getString(2));
+				info.setMusicPictureAddress(rs.getString(3));
+				list.add(info);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
 }

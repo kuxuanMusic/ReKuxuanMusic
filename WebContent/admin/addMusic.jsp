@@ -24,7 +24,7 @@
 </style>
 </head>
 <body>
-	<form action="admin/MusicServlet?op=addMusic" id="addmusic" method="post">
+	<form action="admin/MusicServlet?op=addMusic" id="addmusic" method="post" enctype="multipart/form-data">
 	<input id="op" type="text"  value="addMusic" hidden/>
     <table style="width: 600px;margin: 200px auto;">
         <tr>
@@ -75,7 +75,7 @@
         </tr>
         <tr>
             <th>存放地址：</th>
-            <td><input type="text" id="address" name="address" required></td>
+            <td><input type="file" id="address" name="address" required></td>
         </tr>
         <tr>
         	<th colspan="2" style="text-align:center;"><span style="color:red;">${msg}</span></th>

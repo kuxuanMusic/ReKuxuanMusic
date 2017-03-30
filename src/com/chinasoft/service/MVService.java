@@ -6,6 +6,7 @@ import java.util.Map;
 
 import com.chinasoft.dao.daoImpl.MVDao;
 import com.chinasoft.entity.MV;
+import com.chinasoft.entity.MVInfo;
 import com.chinasoft.entity.MVMusicAndSinger;
 import com.chinasoft.entity.Music;
 import com.chinasoft.util.PageModel;
@@ -81,5 +82,10 @@ public class MVService {
 		PageModel pm = dao.selectMvpaging(pageNO, pageSize);
 		
 		return pm;
+	}
+	
+	public ArrayList<MVInfo> selectMVPicture() {
+		MVDao md = new MVDao();
+		return md.selectMVPicture();
 	}
 }

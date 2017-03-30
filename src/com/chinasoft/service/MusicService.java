@@ -72,6 +72,16 @@ public class MusicService {
 			return 2;
 		}
 	}
+	
+	public int addPicture(String name,String address){
+		MusicDao musicDao = new MusicDao();
+		
+		if(musicDao.addPicture(name, address) == 1){
+			return 1;
+		}else{
+			return 0;
+		}
+	}
 
 	/**
 	 * 查询所有歌曲信息（用于后台歌曲信息展示）

@@ -29,15 +29,15 @@ public class User {
 		super();
 	}
 
-	public User(String password){
+	public User(String password) {
 		this.password = password;
 	}
-	
-	public User(String username,String password){
+
+	public User(String username, String password) {
 		this.username = username;
 		this.password = password;
 	}
-	
+
 	public User(String username, String password, int userType) {
 		this.username = username;
 		this.password = password;
@@ -70,6 +70,10 @@ public class User {
 
 	public String getPassword() {
 		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	@Override

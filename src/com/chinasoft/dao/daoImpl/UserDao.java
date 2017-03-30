@@ -2,7 +2,6 @@ package com.chinasoft.dao.daoImpl;
 
 import java.sql.*;
 import java.util.*;
-import java.util.Date;
 
 import com.chinasoft.dao.*;
 import com.chinasoft.entity.User;
@@ -35,6 +34,7 @@ public class UserDao {
 				user.setUsername(rs.getString("username"));
 
 				user.setUserType(rs.getInt("typeid"));
+				System.out.println(rs.getInt("typeid"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -242,5 +242,24 @@ public class UserDao {
 		}
 
 		return pm;
+	}
+	public int selectUserByUserNameAndPassword(User user) {
+		String sql = "select * from user where username = ? and password = ?";
+		Connection connection = Dao.Connection();
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		try {
+			ps = connection.prepareStatement(sql);
+			ps.setString(1, user.getUsername());
+			ps.setString(2, user.getPassword());
+			rs = ps.executeQuery();
+			while(rs.next()){
+				return 1;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return 0;
+
 	}
 }

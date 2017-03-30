@@ -407,13 +407,12 @@ function serverLogin() {
 		return false;
 	}
 
-	$.post('/ajax/editpassword.ashx?newpass=' + $newpass.val(), function(msg) {
+	$.post('UserServlet?op=changePsw', function(msg) {
 		msgShow('系统提示', '恭喜，密码修改成功！<br>您的新密码为：' + msg, 'info');
 		$newpass.val('');
 		$rePass.val('');
 		close();
 	})
-
 }
 $(function() {
 	openPwd();

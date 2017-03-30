@@ -7,11 +7,14 @@
 <title>Insert title here</title>
 <link href="../jquery-easyui-1.5.1/themes/icon.css" rel="stylesheet"
 	type="text/css" />
-<link href="../jquery-easyui-1.5.1/themes/default/easyui.css" rel="stylesheet" type="text/css" />
+<link href="../jquery-easyui-1.5.1/themes/default/easyui.css"
+	rel="stylesheet" type="text/css" />
 
-<script type="text/javascript" src="../jquery-easyui-1.5.1/jquery.min.js"></script>
+<script type="text/javascript"
+	src="../jquery-easyui-1.5.1/jquery.min.js"></script>
 
-<script type="text/javascript" src="../jquery-easyui-1.5.1/jquery.easyui.min.js"></script>
+<script type="text/javascript"
+	src="../jquery-easyui-1.5.1/jquery.easyui.min.js"></script>
 
 <script src="../js/Cookie.js" type="text/javascript"></script>
 
@@ -49,16 +52,20 @@
 			type : "POST",
 			dataType : "json",
 			//cache:true,
-			url : "UserSrtvlet",
+			url : "UserServlet?op=adminLogin",
 			data : {
 				username : username,
-				password : password,
-				op : login
+				password : password
 			},
 			success : function(json) {
-				if (json.Flag[0].Status == 1) {
-					window.location.href = "admin/index.jsp";
-				} else {
+				if (json == null) {
+					$.messager.alert('错误', '用户不存在', 'error');
+				} else if (json.userType == 1) {
+					$.messager.alert('错误', '您不是管理员，无法登陆', 'error');
+				} else if(json.username == username && json.password == password
+						&& json.userType == 0){
+					window.location.href = "index.jsp?username=" + username;
+				}else{
 					$.messager.alert('错误', '账号或密码错误!', 'error');
 				}
 			},
@@ -76,7 +83,8 @@
 		style="width: 300px; height: 180px; padding: 5px; background: #fafafa;">
 		<div border="false"
 			style="padding-left: 30px; background: #fff; border: 1px solid #ccc;">
-			<form>
+			<form method="post">
+				<input type="hidden" name="op" value="adminLogin" />
 				<table>
 					<tr>
 						<td>账号：</td>
