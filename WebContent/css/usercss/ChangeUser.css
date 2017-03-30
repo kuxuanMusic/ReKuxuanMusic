@@ -1,0 +1,44 @@
+@CHARSET "UTF-8";
+
+#tb {
+	margin: auto;
+	margin-top: 200px;
+	border: 1px solid rgb(190, 180, 230);
+	border-radius: 8px;
+	box-shadow: 5px 5px 5px rgb(250, 150, 250);
+	background-color: rgb(190, 180, 230);
+}
+
+#tb td {
+	border: 1px solid black;
+	border-top: hidden;
+	border-left: hidden;
+	border-right: hidden;
+	border-bottom: hidden;
+	padding: 8px;
+}
+
+#tb td.td1{
+	text-align: right;
+	font-size: 20px;
+	font-family: 楷体;
+}
+
+#tb td.td2 input{
+	text-align: left;
+	font-size: 20px;
+	font-family: 楷体;
+	border-radius:5px
+}
+
+#tb td.td3 {
+	text-align: center;
+}
+
+#tb td.td3 input{	
+	border-radius: 5px;
+	font-size: 20px;
+	font-family: 楷体;
+	width: 60px;
+	height: 30px;
+}
