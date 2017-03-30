@@ -361,7 +361,7 @@ var _menus = {
 			"menuid" : "811",
 			"menuname" : "所有用户",
 			"icon" : "icon-nav",
-			"url" : "#"
+			"url" :   "UserServlet?op=selectAllUser&pageNo=1&pageSize=24"
 		}, {
 			"menuid" : "813",
 			"menuname" : "新增用户",
@@ -435,7 +435,7 @@ $(function() {
 
 			if (r) {
 				// location.href = '/ajax/loginout.ashx';
-				location.href = "login.html";
+				location.href = "login.jsp";
 			}
 		});
 	})
